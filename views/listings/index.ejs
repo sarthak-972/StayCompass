@@ -1,11 +1,11 @@
 <% layout("./layouts/boilerPlate") %>
 
     <style>
-        #filters {
+        /* #filters {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-        }
+        } */
 
         .filter {
             text-align: center;
@@ -22,17 +22,55 @@
         .filter p {
             font-size: 0.8rem;
         }
+
         .tax-info {
             display: none;
         }
-        .tax-toggle {
-            border: 1px solid black;
-            border-radius: 1rem;
-            height: 3.5rem;
-            padding: 1rem;
-            margin-left: 3rem;
-            display: flex;
-            align-items: center;
+
+        /* Add padding to the main listings container on mobile */
+        @media (max-width: 768px) {
+            .container {
+                padding-bottom: 80px;
+                /* Space so the last row of cards isn't covered */
+                /* margin-left: 100px; */
+            }
+
+            .tax-toggle {
+                position: fixed;
+                bottom: 15px;
+                left: 80%;
+                transform: translateX(-50%);
+                z-index: 1050;
+
+                /* Make it smaller for mobile */
+                font-size: 0.75rem;
+                padding: 0.35rem 0.8rem;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                border-radius: 30px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                white-space: nowrap;
+
+                /* Smooth Keyframe entrance */
+                animation: stickyFadeIn 0.3s ease-out forwards;
+            }
+
+            .tax-toggle .form-check-input {
+                width: 1.8rem;
+                height: 0.9rem;
+            }
+        }
+
+        @keyframes stickyFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
         }
     </style>
 
@@ -90,6 +128,7 @@
         </div>
     </div>
     <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
+        
         <%for(let listing of allListings){%>
             <a href="/listings/<%= listing._id %>" class="listing-link">
                 <div class="card listing-card col">
@@ -101,7 +140,7 @@
                                 <%= listing.title%>
                             </b><br>
                             &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
-                            <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
+                                <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
                         </p>
                     </div>
                 </div>
@@ -109,17 +148,17 @@
             <%}%>
     </div>
 
-<script>
-    let taxSwitch = document.getElementById("switchCheckDefault");
-    taxSwitch.addEventListener("click",()=>{
-        let taxInfo = document.getElementsByClassName("tax-info");
-        for(info of taxInfo){
-            if(info.style.display!="inline"){
-                info.style.display = "inline";
-            } else {
-                info.style.display = "none" ;
+    <script>
+        let taxSwitch = document.getElementById("switchCheckDefault");
+        taxSwitch.addEventListener("click", () => {
+            let taxInfo = document.getElementsByClassName("tax-info");
+            for (info of taxInfo) {
+                if (info.style.display != "inline") {
+                    info.style.display = "inline";
+                } else {
+                    info.style.display = "none";
+                }
+
             }
-            
-        }
-    })
-</script>
+        })
+    </script>

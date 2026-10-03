@@ -15,6 +15,30 @@ module.exports.renderNewForm = (req, res) => {
     res.render("listings/new.ejs")
 }
 
+module.exports.searchOption = async (req, res) => {
+    try {
+    const { q } = req.query;
+    let allListings;
+
+    if (q && q.trim() !== "") {
+      const searchRegex = new RegExp(q.trim(), "i");
+      allListings = await Listing.find({
+        $or: [
+          { location: searchRegex },
+          { country: searchRegex },
+          { title: searchRegex }
+        ]
+      });
+    } else {
+      allListings = await Listing.find({});
+    }
+
+    res.render("listings/index.ejs", { allListings, searchQuery: q || "" });
+  } catch (err) {
+    console.error("Search Error:", err);
+    res.status(500).send("Server Error");
+  }}
+
 module.exports.showListing = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id).populate({ path: "reviews", populate: { path: "author" } }).populate("owner");

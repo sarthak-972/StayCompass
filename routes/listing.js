@@ -18,6 +18,8 @@ router
 //new route
 router.get("/new",isLoggedIn,listingController.renderNewForm);
 
+// GET /listings route
+router.get("/", listingController.searchOption);
 
 router
     .route("/:id")

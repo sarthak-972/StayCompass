@@ -121,3 +121,44 @@ body {
     height: 400px;
     width: 80vh;
 }
+@media (max-width: 768px) {
+  #map {
+    height: 250px; /* Reduce map height on smaller mobile screens */
+  }
+}
+
+#filters {
+  display: flex;
+  flex-wrap: nowrap; /* Prevents wrapping onto multiple lines */
+  overflow-x: auto;  /* Enables horizontal scrolling */
+  align-items: center;
+  padding: 0.5rem 0;
+  white-space: nowrap;
+}
+
+/* Hide ugly scrollbars while keeping touch scroll active */
+#filters::-webkit-scrollbar {
+  display: none;
+}
+#filters {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Fix individual filter item sizing */
+.filter {
+  text-align: center;
+  margin-right: 2rem;
+  opacity: 0.7;
+  flex: 0 0 auto; /* Keeps items from shrinking or expanding */
+}
+
+.filter:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.filter p {
+  font-size: 0.8rem;
+  margin-bottom: 0;
+}
